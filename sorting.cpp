@@ -22,14 +22,22 @@ int main() {
         cin >> arr[i]; 
     } 
 
-    switch (sort)
+    if (sort == 'a') //heapsort
     {
-        case a: // heapsort
-        
-        break;
 
-        default:
-        
+
+    }
+    else if (sort == 'b')
+    {
+
+    }
+    else if (sort == 'c')
+    {
+
+    }
+    else
+    {
+        cout << "Please Try again with Valid Input";
     }
     
     
