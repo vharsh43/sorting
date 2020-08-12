@@ -27,11 +27,11 @@ int main() {
 
 
     }
-    else if (sort == 'b')
+    else if (sort == 'b') //mergesort
     {
 
     }
-    else if (sort == 'c')
+    else if (sort == 'c') //quicksort
     {
 
     }
