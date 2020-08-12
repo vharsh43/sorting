@@ -11,7 +11,7 @@ int main() {
     cin >> sort;
     
     int size=0; 
-    int arr[size];
+    int arr[size-1];
     
     cout << "\n Please enter the size of List" ;
     cin >> size; 
@@ -35,7 +35,7 @@ int main() {
     {
 
     }
-    else
+    if (sort != 'a' && sort != 'b' && sort != 'c')
     {
         cout << "Please Try again with Valid Input";
     }
