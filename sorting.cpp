@@ -2,101 +2,217 @@
 using namespace std;
 
 
-void heapify(int arr[], int n, int i) 
+/* hSort */
+void heapify(int array[], int n, int x) 
 { 
-    int largest = i; // Initialize largest as root 
-    int l = 2 * i + 1; // left = 2*i + 1 
-    int r = 2 * i + 2; // right = 2*i + 2 
+    int biggest = x; // Initialize Root
+    int l = 2 * x + 1; // left 
+    int r = 2 * x + 2; // right
   
-    // If left child is larger than root 
-    if (l < n && arr[l] > arr[largest]) 
-        largest = l; 
+    
+    if (l < n && array[l] > array[biggest])      // For left > root 
+        biggest = l; 
   
-    // If right child is larger than largest so far 
-    if (r < n && arr[r] > arr[largest]) 
-        largest = r; 
+    
+    if (r < n && array[r] > array[biggest])     // For right child > biggest till now
+        biggest = r; 
   
-    // If largest is not root 
-    if (largest != i) { 
-        swap(arr[i], arr[largest]); 
+    
+    if (biggest != x) {                // For biggest != root 
+        swap(array[x], array[biggest]); 
   
-        // Recursively heapify the affected sub-tree 
-        heapify(arr, n, largest); 
+        // Recursively  
+        heapify(array, n, biggest); 
     } 
 } 
   
-// main function to do heap sort 
-void heapSort(int arr[], int size) 
+void hSort(int array[], int n)         // hSort
+
 { 
-    // Build heap (rearrange array) 
-    for (int i = size-1 / 2 - 1; i >= 0; i--) 
-        heapify(arr, n, i); 
+    for (int x = n / 2 - 1; x >= 0; x--)         // Rearrayange array
+        heapify(array, n, x); 
   
-    // One by one extract an element from heap 
-    for (int i = n - 1; i >= 0; i--) { 
-        // Move current root to end 
-        swap(arr[0], arr[i]); 
-  
-        // call max heapify on the reduced heap 
-        heapify(arr, i, 0); 
+    for (int x = n - 1; x >= 0; x--) {               // Extraction 
+
+        swap(array[0], array[x]);                        //swap root to end 
+        heapify(array, x, 0);                          // call to reduced heap 
+
     } 
 } 
   
-// Print array
-void printArray(int arr[], int size) 
+
+/* MergeSort */
+
+void merge(int array[], int l, int m, int r) 
 { 
-    for (int i = 0; i < size-1; ++i) 
-        cout << arr[i] << " "; 
+    int x, y, z; 
+    int no1 = m - l + 1; 
+    int no2 = r - m; 
+  
+    int L[no1], R[no2];                       // Temporary 
+
+  
+    for (x = 0; x < no1; x++)                // Duplicate data to Temp array
+        L[x] = array[l + x]; 
+
+    for (y = 0; y < no2; y++) 
+        R[y] = array[m + 1 + y]; 
+  
+    x = 0;  
+    y = 0;  
+    z = l; 
+    while (x < no1 && y < no2) { 
+        if (L[x] <= R[y]) { 
+            array[z] = L[x]; 
+            x++; 
+        } 
+        else { 
+            array[z] = R[y]; 
+            y++; 
+        } 
+        z++; 
+    } 
+  
+
+    while (x < no1) {                // If anything remains for L[] it copy
+        array[z] = L[x]; 
+        x++; 
+        z++; 
+    } 
+  
+    
+    while (y < no2) {                // If anything remains for R[] it copy
+        array[z] = R[y]; 
+        y++; 
+        z++; 
+    } 
+} 
+  
+
+void mergeSort(int array[], int l, int r)  // l=Left, r=Right
+{ 
+    if (l < r) { 
+        int m = l + (r - l) / 2; 
+  
+        // Sort Both Halves
+        mergeSort(array, l, m); 
+        mergeSort(array, m + 1, r); 
+  
+        merge(array, l, m, r); 
+    } 
+}   
+ 
+void swap(int* a, int* b) 
+{ 
+    int t = *a; 
+    *a = *b; 
+    *b = t; 
+}  
+
+int partition (int array[], int low, int high) 
+{ 
+    int pivot = array[high];    // pivot 
+    int x = (low - 1);  
+  
+    for (int y = low; y <= high- 1; y++) 
+    { 
+        if (array[y] <= pivot) 
+        { 
+            x++;     
+            swap(&array[x], &array[y]); 
+        } 
+    } 
+    swap(&array[x + 1], &array[high]); 
+    return (x + 1); 
+} 
+  
+
+void quickSort(int array[], int low, int high) 
+{ 
+    if (low < high) 
+    { 
+        int pi = partition(array, low, high); 
+  
+        quickSort(array, low, pi - 1); 
+        quickSort(array, pi + 1, high); 
+    } 
+} 
+
+
+  
+/* Print Function */
+void printarrayay(int array[], int n) 
+{ 
+    for (int x = 0; x < n; ++x) 
+        cout << array[x] << " "; 
     cout << "\n"; 
 } 
-  
+
+
+
 
 
 int main() {
     
+    
+    cout << "------------------------------ \n";
+    cout << "Welcome to Sorting C++ Program \n";
+    cout << "------------------------------ \n";
+
+    int n; 
     char sort;
 
-    cout << "Choose one to implement: \n a. heapsort \n b. mergesort \n c. quicksort \n ";
-    cout << "\n Please input a, b, or c !! \n" ;
     
+    cout << "\nPlease enter the size of List \n" ;
+    cin >> n; 
+
+    int array[n];
+
+    cout << "\nInput elements of array: \n"; 
+    
+    for(int x=0;x<n;x++)
+    { 
+        cin >> array[x]; 
+    } 
+
+    cout << "Choose one to implement: \n a. HeapSort \n b. Mergesort \n c. Quicksort \n ";
+
+    
+    cout << "\nPlease input a, b, or c !! \n" ;
     cin >> sort;
     
-    int size=0; 
-    int arr[size-1];
-    
-    cout << "\n Please enter the size of List \n" ;
-    cin >> size; 
+    cout << "\n";
 
-    size--;
-    
-    cout << "\n Input elements of array: \n"; 
-    
-    for(int i=0;i<size;i++){ 
-        cin >> arr[i]; 
-    } 
-    cout << "\n"; 
-
-    if (sort == 'a') //heapsort
+    if (sort == 'a' || sort == 'A') //hSort
     {
-         heapSort(arr, size); 
-  
+        hSort(array, n); 
+
         cout << "Sorted array is \n"; 
-        printArray(arr, size); 
+        printarrayay(array, n); 
 
+        return 0;
     }
-    else if (sort == 'b') //mergesort
+    else if (sort == 'b' || sort == 'B') //mergesort
     {
-
-    }
-    else if (sort == 'c') //quicksort
-    {
-
-    }
-    if (sort != 'a' && sort != 'b' && sort != 'c')
-    {
-        cout << "Please Try again with Valid Input";
-    }
+         
+        mergeSort(array, 0, n - 1);
+        printf("\nSorted array is \n"); 
+        printarrayay(array, n); 
+        return 0; 
     
+    }
+    else if (sort == 'c' || sort == 'C') //quicksort
+    {
+
+    quickSort(array, 0, n-1); 
+    printf("Sorted array: "); 
+    printarrayay(array, n); 
+    return 0; 
+    }
+    if (sort != 'a' && sort != 'b' && sort != 'c' && sort != 'A' && sort != 'B' && sort != 'C' )
+    {
+        cout << "\nPlease Try again with Valid Input";
+    }
     
 
 	
